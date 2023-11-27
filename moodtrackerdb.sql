@@ -1,0 +1,7 @@
+USE moodtracker;
+
+CREATE TABLE Users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  email VARCHAR(50) UNIQUE,
+  password VARCHAR(255)
+);
