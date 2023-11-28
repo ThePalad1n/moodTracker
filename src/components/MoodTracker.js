@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Stack from './Stack';
 import {
     Chart as ChartJS,
@@ -11,6 +11,9 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import axios from 'axios';
+import { useUser } from '../contexts/UserContext';
+import api from '../services/api'
 
 // Register Chart.js components
 ChartJS.register(
@@ -24,6 +27,8 @@ ChartJS.register(
 );
 
 const MoodTracker = () => {
+    const { currentUser } = useUser();
+    console.log('Current User:', currentUser);
     const [moodStack, setMoodStack] = useState(new Stack());
     const [mood, setMood] = useState('');
     const [rating, setRating] = useState(5); // Default rating starts at 5
@@ -32,13 +37,61 @@ const MoodTracker = () => {
         setMood(event.target.value);
     };
 
+    // Define handleRatingChange function here
     const handleRatingChange = (event) => {
         setRating(event.target.value);
     };
+    useEffect(() => {
+        if (currentUser && currentUser.id) {
+            loadPreviousMoods();
+        }
+    }, [currentUser]);
 
-    const addMood = () => {
+    const loadPreviousMoods = async () => {
+        try {
+            const moods = await api.getMoodsByUserId(currentUser.id);
+            
+            // Assume moods is an array of mood objects with 'mood', 'rating', and 'timestamp' properties
+            const moodData = moods.map(mood => mood.rating);
+            const moodLabels = moods.map(mood => new Date(mood.timestamp).toLocaleTimeString());
+
+            setChartData({
+                labels: moodLabels,
+                datasets: [
+                    {
+                        label: 'Mood Rating',
+                        data: moodData,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1,
+                    },
+                ],
+            });
+
+            // Assuming you also want to fill the mood stack with previous entries
+            const newStack = new Stack();
+            newStack.items = moods.map(mood => ({ mood: mood.mood, rating: mood.rating }));
+            setMoodStack(newStack);
+
+        } catch (error) {
+            console.error('Error loading previous moods', error);
+        }
+    };
+
+    const addMood = async () => {
+        if (!currentUser) {
+          console.error('No current user found');
+          return;
+        }
+        const newMoodEntry = { mood, rating: parseInt(rating, 10) };
+        try {
+          // Use api.addMood from api.js instead of axios.post directly
+          await api.addMood(currentUser.id, newMoodEntry.mood, newMoodEntry.rating);
+          // Rest of the code to update state...
+        } catch (error) {
+          console.error('Error adding mood entry', error);
+        }
+      
         const newStack = new Stack();
-        const newMoodEntry = { mood, rating: parseInt(rating, 10) }; // Parse rating to be a number
         newStack.items = [...moodStack.items, newMoodEntry];
         setMoodStack(newStack);
 
