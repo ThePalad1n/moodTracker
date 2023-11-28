@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Stack from './Stack';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -10,6 +11,9 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import axios from 'axios';
+import { useUser } from '../contexts/UserContext';
+import api from '../services/api'
 
 // Register Chart.js components
 ChartJS.register(
@@ -23,91 +27,140 @@ ChartJS.register(
 );
 
 const MoodTracker = () => {
-    const [moodEntries, setMoodEntries] = useState({});
+    const { currentUser } = useUser();
+    console.log('Current User:', currentUser);
+    const [moodStack, setMoodStack] = useState(new Stack());
     const [mood, setMood] = useState('');
     const [rating, setRating] = useState(5); // Default rating starts at 5
-    const [selectedMoodTimestamp, setSelectedMoodTimestamp] = useState('');
 
     const handleMoodChange = (event) => {
         setMood(event.target.value);
     };
 
+    // Define handleRatingChange function here
     const handleRatingChange = (event) => {
         setRating(event.target.value);
     };
+    useEffect(() => {
+        if (currentUser && currentUser.id) {
+            loadPreviousMoods();
+        }
+    }, [currentUser]);
 
-    const handleMoodSelection = (event) => {
-        setSelectedMoodTimestamp(event.target.value);
+    const loadPreviousMoods = async () => {
+        try {
+            const moods = await api.getMoodsByUserId(currentUser.id);
+            
+            // Assume moods is an array of mood objects with 'mood', 'rating', and 'timestamp' properties
+            const moodData = moods.map(mood => mood.rating);
+            const moodLabels = moods.map(mood => new Date(mood.timestamp).toLocaleTimeString());
+
+            setChartData({
+                labels: moodLabels,
+                datasets: [
+                    {
+                        label: 'Mood Rating',
+                        data: moodData,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1,
+                    },
+                ],
+            });
+
+            // Assuming you also want to fill the mood stack with previous entries
+            const newStack = new Stack();
+            newStack.items = moods.map(mood => ({ mood: mood.mood, rating: mood.rating }));
+            setMoodStack(newStack);
+
+        } catch (error) {
+            console.error('Error loading previous moods', error);
+        }
     };
 
-    const addMood = () => {
-        const timestamp = new Date().toISOString();
+    const addMood = async () => {
+        if (!currentUser) {
+          console.error('No current user found');
+          return;
+        }
         const newMoodEntry = { mood, rating: parseInt(rating, 10) };
-        setMoodEntries({...moodEntries, [timestamp]: newMoodEntry});
+        try {
+          // Use api.addMood from api.js instead of axios.post directly
+          await api.addMood(currentUser.id, newMoodEntry.mood, newMoodEntry.rating);
+          // Rest of the code to update state...
+        } catch (error) {
+          console.error('Error adding mood entry', error);
+        }
+      
+        const newStack = new Stack();
+        newStack.items = [...moodStack.items, newMoodEntry];
+        setMoodStack(newStack);
 
-        updateChartData(timestamp, newMoodEntry.rating);
+        // Add to chart data
+        const newChartData = {
+            ...chartData,
+            labels: [...chartData.labels, new Date().toLocaleTimeString()], // Add a timestamp
+            datasets: [
+                {
+                    ...chartData.datasets[0],
+                    data: [...chartData.datasets[0].data, newMoodEntry.rating],
+                },
+            ],
+        };
+        setChartData(newChartData);
 
         setMood(''); // Reset mood input
         setRating(5); // Reset rating to default
     };
 
     const removeMood = () => {
-        const {[selectedMoodTimestamp]: _, ...rest} = moodEntries;
-        setMoodEntries(rest);
+        const newStack = new Stack();
+        newStack.items = moodStack.items.slice(0, moodStack.size() - 1);
+        setMoodStack(newStack);
 
-        updateChartData();
-
-        setSelectedMoodTimestamp('');
+        // Remove from chart data
+        const newChartData = {
+            ...chartData,
+            labels: chartData.labels.slice(0, -1),
+            datasets: [
+                {
+                    ...chartData.datasets[0],
+                    data: chartData.datasets[0].data.slice(0, -1),
+                },
+            ],
+        };
+        setChartData(newChartData);
     };
 
+
     const [chartData, setChartData] = useState({
-        labels: [],
+        labels: [], // This will be our timestamps
         datasets: [
             {
                 label: 'Mood Rating',
-                data: [],
+                data: [], // This will be our mood ratings
                 borderColor: 'rgb(75, 192, 192)',
                 tension: 0.1,
             },
         ],
     });
 
-    const updateChartData = (timestamp = null, rating = null) => {
-        const labels = timestamp ? [...chartData.labels, timestamp] : chartData.labels.filter(label => label !== selectedMoodTimestamp);
-        const data = timestamp ? [...chartData.datasets[0].data, rating] : chartData.datasets[0].data.filter((_, index) => chartData.labels[index] !== selectedMoodTimestamp);
-
-        setChartData({
-            ...chartData,
-            labels,
-            datasets: [
-                {
-                    ...chartData.datasets[0],
-                    data,
-                },
-            ],
-        });
-    };
-
     return (
         <div>
             <input type="text" value={mood} onChange={handleMoodChange} placeholder="How are you feeling?" />
             <input type="number" value={rating} onChange={handleRatingChange} min="1" max="10" />
             <button onClick={addMood}>Add Mood</button>
-
-            <select value={selectedMoodTimestamp} onChange={handleMoodSelection}>
-                <option value="">Select a mood to remove...</option>
-                {Object.keys(moodEntries).map(timestamp => (
-                    <option key={timestamp} value={timestamp}>
-                        {`${moodEntries[timestamp].mood} - Rating: ${moodEntries[timestamp].rating} (${timestamp})`}
-                    </option>
+            <button onClick={removeMood} disabled={moodStack.isEmpty()}>Remove Mood</button>
+            <div>
+                <h2>Current Mood Stack:</h2>
+                {moodStack.items.map((moodEntry, index) => (
+                    <p key={index}>{moodEntry.mood} - Rating: {moodEntry.rating}</p>
                 ))}
-            </select>
-            <button onClick={removeMood} disabled={!selectedMoodTimestamp}>Remove Selected Mood</button>
-
+            </div>
             <div style={{ width: '600px', height: '400px' }}>
                 <Line data={chartData} />
             </div>
         </div>
+
     );
 };
 

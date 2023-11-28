@@ -1,22 +1,30 @@
 const express = require('express');
-const router = express.Router();
 const bcrypt = require('bcrypt');
+const router = express.Router();
 
-router.post('/', async (request, response) => {
-  const { email, password } = request.body;
+module.exports = function(pool) {
 
-  // Fetch the user by email from the SQL database
-  const [rows, fields] = await pool.promise().query('SELECT * FROM Users WHERE email = ?', [email]);
+  router.post('/', async (request, response) => {
+  try {
+    const { email, password } = request.body;
 
-  // If a user with this email was not found or their password is incorrect, send an error
-  if (rows.length === 0 || !bcrypt.compareSync(password, rows[0].password)) {
-    response.status(401).json({ error: 'Invalid email or password' });
-    return;
+    const [rows, fields] = await pool.promise().query('CALL GetUserByEmail(?)', [email]);
+
+    if (rows[0].length === 0 || !bcrypt.compareSync(password, rows[0][0].password)) {
+      response.status(401).json({ error: 'Invalid email or password' });
+      return;
+    }
+
+    response.json({
+      status: 'success',
+      id: rows[0][0].id, // assuming `id` is contained in the first row's first object
+      email: email
+    });
+  } catch (error) {
+    console.error(error);
+    response.status(500).json({ error: 'Internal Server Error' });
   }
+})
 
-  // If we made it here, the login was successful
-  // In a real app, here's where you'd start a session for this user
-  response.json({ status: 'success' });
-});
-
-module.exports = router;
+  return router;
+};
