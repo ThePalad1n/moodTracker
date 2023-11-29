@@ -1,7 +1,3 @@
-Certainly! Here's a README template for your Mood Tracker project:
-
----
-
 # Mood Tracker
 
 Welcome to the Mood Tracker project! This application offers a user-friendly interface for mood tracking and analysis using your favorite data structures and algorithms!
@@ -60,7 +56,3 @@ This application is built using the following frameworks:
 
 - **React**: A JavaScript library for building user interfaces.
 - **MySQL**: A robust database management system to store and manage your mood data.
-
----
-
-Feel free to customize this README to better fit the specifics of your project or to add additional sections as needed!
