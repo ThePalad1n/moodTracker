@@ -52,9 +52,12 @@ const addMood = async (userId, mood, rating) => {
 };
 
 const getMoodsByUserId = async (userId) => {
-  const response = await axios.get(`${API_URL}/mood/user/${userId}`);
+  const url = `${API_URL}/mood/user/${userId}`;
+  console.log('Making Axios GET request to:', url);  // Log the URL
+  const response = await axios.get(url);
   return response.data;
 };
+
 
 export default {
   login,
