@@ -15,7 +15,7 @@ Before you begin, ensure you have [Node.js](https://nodejs.org/) installed on yo
 To clone the project, run the following command in your terminal:
 
 ```bash
-git clone [Your Repository URL]
+git clone https://github.com/ThePalad1n/moodTracker.git
 ```
 
 ### Installing Packages
