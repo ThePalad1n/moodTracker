@@ -7,14 +7,6 @@ const app = express();
 
 app.use(cors());
 
-// No need to check for environment,
-// we can directly serve the build folder.
-app.use(express.static(path.join(__dirname, './client/build')));
-
-// Setup a fallback for all other GET requests
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'index.html'));
-});
 
 const mysql = require('mysql2');
 
@@ -52,7 +44,7 @@ const registerRoutes = require('./routes/register')(pool); // Ensure this path i
 app.use('/api/register', registerRoutes);
 const userRoutes = require('./routes/users');
 app.use('/api', userRoutes); 
-const moodRoutes = require('./routes/mood')(pool);
+const moodRoutes = require('./routes/mood')(pool); 
 app.use('/api/mood', moodRoutes);
 
 
