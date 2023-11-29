@@ -15,6 +15,21 @@ module.exports = function(pool) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+
+  
+  router.delete('/remove/:moodId', async (req, res) => {
+    const { moodId } = req.params;
+
+    try {
+        await pool.promise().query('DELETE FROM MoodEntries WHERE id = ?', [moodId]);
+        res.json({ success: true, message: 'Mood removed' });
+    } catch (error) {
+        console.error('Error removing mood entry:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
   router.get('/user/:userId', async (req, res) => {
     const { userId } = req.params;
     console.log('Fetching moods for user:', userId);

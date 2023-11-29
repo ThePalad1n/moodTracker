@@ -51,6 +51,15 @@ const addMood = async (userId, mood, rating) => {
   return response.data;
 };
 
+
+const removeMood = async (moodId) => {
+  const response = await axios.delete(`http://localhost:3001/api/mood/remove/${moodId}`);
+  console.log('Making Axios DELETE request to:', response);
+  return response.data;
+};
+
+
+
 const getMoodsByUserId = async (userId) => {
   const url = `${API_URL}/mood/user/${userId}`;
   console.log('Making Axios GET request to:', url);  // Log the URL
@@ -63,6 +72,7 @@ export default {
   login,
   register,
   addMood,
-  getMoodsByUserId,
+  removeMood,
+  getMoodsByUserId
   // other methods...
 };

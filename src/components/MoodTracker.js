@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Stack from './Stack';
+import Queue from './Queue'; // Import Queue class
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -27,7 +28,8 @@ ChartJS.register(
 
 const MoodTracker = () => {
     const { currentUser } = useUser();
-    const [moodStack, setMoodStack] = useState(new Stack());
+    const [moodDataStructure, setMoodDataStructure] = useState(new Stack());
+    const [dataStructureType, setDataStructureType] = useState('stack');
     const [mood, setMood] = useState('');
     const [rating, setRating] = useState(5);
     const [chartData, setChartData] = useState({
@@ -50,6 +52,18 @@ const MoodTracker = () => {
         setRating(event.target.value);
     };
 
+    const loadDataStructure = useCallback((structureType, moods) => {
+        const ds = structureType === 'stack' ? new Stack() : new Queue();
+        moods.forEach(mood => {
+            if (structureType === 'stack') {
+                ds.push(mood);
+            } else {
+                ds.enqueue(mood);
+            }
+        });
+        setMoodDataStructure(ds);
+    }, []);
+
     const loadPreviousMoods = useCallback(async () => {
         if (!currentUser || !currentUser.id) return;
 
@@ -70,20 +84,20 @@ const MoodTracker = () => {
                 ],
             });
 
-            setMoodStack(new Stack());
-            setMoodStack(prevStack => {
-                const newStack = new Stack();
-                newStack.items = moods.map(mood => ({ mood: mood.mood, rating: mood.rating }));
-                return newStack;
-            });
+            loadDataStructure(dataStructureType, moods);
         } catch (error) {
             console.error('Error loading previous moods', error);
         }
-    }, [currentUser]);
+    }, [currentUser, dataStructureType, loadDataStructure]);
 
     useEffect(() => {
         loadPreviousMoods();
     }, [currentUser, loadPreviousMoods]);
+
+    const handleDataStructureChange = (event) => {
+        setDataStructureType(event.target.value);
+        loadDataStructure(event.target.value, moodDataStructure.items);
+    };
 
     const addMood = async () => {
         if (!currentUser) {
@@ -96,11 +110,13 @@ const MoodTracker = () => {
         try {
             await api.addMood(currentUser.id, newMoodEntry.mood, newMoodEntry.rating);
 
-            setMoodStack(prevStack => {
-                const newStack = new Stack();
-                newStack.items = [...prevStack.items, newMoodEntry];
-                return newStack;
-            });
+            if (dataStructureType === 'stack') {
+                moodDataStructure.push(newMoodEntry);
+            } else {
+                moodDataStructure.enqueue(newMoodEntry);
+            }
+
+            setMoodDataStructure(moodDataStructure);
 
             setChartData(prevChartData => ({
                 ...prevChartData,
@@ -120,34 +136,66 @@ const MoodTracker = () => {
         }
     };
 
-    const removeMood = () => {
-        setMoodStack(prevStack => {
-            const newStack = new Stack();
-            newStack.items = prevStack.items.slice(0, prevStack.size() - 1);
-            return newStack;
-        });
+    const removeMood = async () => {
+        console.log('Current Mood Data Structure:', moodDataStructure.items);
 
-        setChartData(prevChartData => ({
-            ...prevChartData,
-            labels: prevChartData.labels.slice(0, -1),
-            datasets: [
-                {
-                    ...prevChartData.datasets[0],
-                    data: prevChartData.datasets[0].data.slice(0, -1),
-                },
-            ],
-        }));
+        if (moodDataStructure.isEmpty()) {
+            console.error('No moods to remove');
+            return;
+        }
+    
+        let moodToRemove;
+        console.log('Mood to remove:', moodToRemove); // Log to check the structure
+
+
+        if (dataStructureType === 'stack') {
+            console.log("stack");
+            moodToRemove = moodDataStructure.pop();
+        } else {
+            console.log("queue");
+            moodToRemove = moodDataStructure.dequeue();
+        }
+    
+        if (!moodToRemove || !moodToRemove.id) {
+            console.error('Invalid mood entry or missing ID');
+            return;
+        }
+
+
+        try {
+            await api.removeMood(moodToRemove.id);
+            setMoodDataStructure(moodDataStructure);
+            
+            // Update chart data...
+            setChartData(prevChartData => ({
+                ...prevChartData,
+                labels: prevChartData.labels.slice(0, -1),
+                datasets: [
+                    {
+                        ...prevChartData.datasets[0],
+                        data: prevChartData.datasets[0].data.slice(0, -1),
+                    },
+                ],
+            }));
+        } catch (error) {
+            console.error('Error removing mood entry', error);
+        }
     };
+    
 
     return (
         <div>
+            <select value={dataStructureType} onChange={handleDataStructureChange}>
+                <option value="stack">Stack</option>
+                <option value="queue">Queue</option>
+            </select>
             <input type="text" value={mood} onChange={handleMoodChange} placeholder="How are you feeling?" />
             <input type="number" value={rating} onChange={handleRatingChange} min="1" max="10" />
             <button onClick={addMood}>Add Mood</button>
-            <button onClick={removeMood} disabled={moodStack.isEmpty()}>Remove Mood</button>
+            <button onClick={removeMood} disabled={moodDataStructure.isEmpty()}>Remove Mood</button>
             <div>
-                <h2>Current Mood Stack:</h2>
-                {moodStack.items.map((moodEntry, index) => (
+                <h2>Current Mood Data:</h2>
+                {moodDataStructure.items.map((moodEntry, index) => (
                     <p key={index}>{moodEntry.mood} - Rating: {moodEntry.rating}</p>
                 ))}
             </div>

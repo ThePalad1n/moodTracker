@@ -23,6 +23,10 @@ BEGIN
 END //
 DELIMITER ;
 
+-- Activity Input Component: For users to input their daily activities.
+-- ALTER TABLE MoodEntries
+-- ADD activity VARCHAR(255);
+
 CREATE TABLE MoodEntries (
   id INT PRIMARY KEY AUTO_INCREMENT,
   userId INT,
