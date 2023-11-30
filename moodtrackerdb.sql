@@ -1,3 +1,4 @@
+CREATE DATABASE MoodTracker;
 USE MoodTracker;
 
 CREATE TABLE Users (

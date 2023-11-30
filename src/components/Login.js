@@ -30,8 +30,12 @@ function LoginPage() {
     }
   };
   
+  const goBackToHomePage = () => {
+    navigate('/');
+  };
 
   return (
+    <div>
     <form onSubmit={handleSubmit}>
       <input 
         type="email"
@@ -47,6 +51,8 @@ function LoginPage() {
       />
       <button type="submit">Login</button>
     </form>
+    <button onClick={goBackToHomePage}>Home</button>
+    </div>
   );
 };
 

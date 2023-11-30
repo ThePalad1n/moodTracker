@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Stack from './Stack';
 import Queue from './Queue'; // Import Queue class
 import {
@@ -181,7 +182,12 @@ const MoodTracker = () => {
             console.error('Error removing mood entry', error);
         }
     };
-    
+
+    const navigate = useNavigate();
+
+    const returnToHomePage = () => {
+        navigate('/'); // Update the path according to your home page route
+    };
 
     return (
         <div>
@@ -202,6 +208,7 @@ const MoodTracker = () => {
             <div style={{ width: '600px', height: '400px' }}>
                 <Line data={chartData} />
             </div>
+            <button onClick={returnToHomePage}>Home</button>
         </div>
     );
 };

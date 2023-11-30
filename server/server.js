@@ -14,7 +14,7 @@ const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: 'password',
-  database: 'moodtracker',
+  database: 'MoodTracker',
   waitForConnections: true,
   connectionLimit: 10,
 });
