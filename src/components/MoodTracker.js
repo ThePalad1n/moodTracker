@@ -168,10 +168,20 @@ const MoodTracker = () => {
 
 
         try {
-            await api.removeMood(moodToRemove.id);
-            setMoodDataStructure(moodDataStructure);
-            
-            // Update chart data...
+            await api.removeMood(moodToRemove.id); // Make an API call to remove the mood from the database
+    
+            // Update the local state to reflect the removal
+            const newItems = moodDataStructure.items.filter(item => item.id !== moodToRemove.id);
+            const newMoodDataStructure = dataStructureType === 'stack' ? new Stack() : new Queue();
+            newItems.forEach(item => {
+                if (dataStructureType === 'stack') {
+                    newMoodDataStructure.push(item);
+                } else {
+                    newMoodDataStructure.enqueue(item);
+                }
+            });
+    
+            setMoodDataStructure(newMoodDataStructure);
             setChartData(prevChartData => ({
                 ...prevChartData,
                 labels: prevChartData.labels.slice(0, -1),
@@ -190,7 +200,7 @@ const MoodTracker = () => {
     const navigate = useNavigate();
 
     const returnToHomePage = () => {
-        navigate('/'); // Update the path according to your home page route
+        navigate('/'); 
     };
 
 
