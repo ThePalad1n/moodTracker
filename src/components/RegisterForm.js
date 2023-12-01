@@ -24,7 +24,12 @@ const RegisterForm = () => {
         }
     };
 
+    const goBackToHomePage = () => {
+        navigate('/');
+      };
+
     return (
+        <div>
         <form onSubmit={handleSubmit}>
             <input 
                 type="email"
@@ -40,6 +45,8 @@ const RegisterForm = () => {
             />
             <button type="submit">Register</button>
         </form>
+        <button onClick={goBackToHomePage}>Home</button>
+        </div>
     );
 };
 

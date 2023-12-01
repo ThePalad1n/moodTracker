@@ -15,7 +15,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import { useUser } from '../contexts/UserContext';
 import api from '../services/api';
-
+import '../moodTracker.css';
 // Register Chart.js components
 ChartJS.register(
     CategoryScale,
@@ -139,24 +139,28 @@ const MoodTracker = () => {
 
     const removeMood = async () => {
         console.log('Current Mood Data Structure:', moodDataStructure.items);
-
         if (moodDataStructure.isEmpty()) {
             console.error('No moods to remove');
             return;
         }
     
+        
         let moodToRemove;
-        console.log('Mood to remove:', moodToRemove); // Log to check the structure
 
 
+        console.log('Data Structure Type:', dataStructureType);
         if (dataStructureType === 'stack') {
             console.log("stack");
             moodToRemove = moodDataStructure.pop();
+            moodToRemove.id = moodDataStructure.size();
         } else {
             console.log("queue");
             moodToRemove = moodDataStructure.dequeue();
+            moodToRemove.id = moodDataStructure.size()
         }
-    
+
+        console.log('Mood to remove:', moodToRemove);
+        
         if (!moodToRemove || !moodToRemove.id) {
             console.error('Invalid mood entry or missing ID');
             return;
@@ -189,28 +193,32 @@ const MoodTracker = () => {
         navigate('/'); // Update the path according to your home page route
     };
 
+
     return (
         <div>
-            <select value={dataStructureType} onChange={handleDataStructureChange}>
+            <select value={dataStructureType} onChange={handleDataStructureChange} className="input-select">
                 <option value="stack">Stack</option>
                 <option value="queue">Queue</option>
             </select>
-            <input type="text" value={mood} onChange={handleMoodChange} placeholder="How are you feeling?" />
-            <input type="number" value={rating} onChange={handleRatingChange} min="1" max="10" />
-            <button onClick={addMood}>Add Mood</button>
-            <button onClick={removeMood} disabled={moodDataStructure.isEmpty()}>Remove Mood</button>
+            <input type="text" value={mood} onChange={handleMoodChange} placeholder="How are you feeling?" className="input-text" />
+            <input type="number" value={rating} onChange={handleRatingChange} min="1" max="10" className="input-number" />
+            <button onClick={addMood} className="btn">Add Mood</button>
+            <button onClick={removeMood} disabled={moodDataStructure.isEmpty()} className="btn">Remove Mood</button>
             <div>
                 <h2>Current Mood Data:</h2>
-                {moodDataStructure.items.map((moodEntry, index) => (
-                    <p key={index}>{moodEntry.mood} - Rating: {moodEntry.rating}</p>
-                ))}
+                <div className="scrollable-mood-list">
+                    {moodDataStructure.items.map((moodEntry, index) => (
+                        <p key={index}>{moodEntry.mood} - Rating: {moodEntry.rating}</p>
+                    ))}
+                </div>
             </div>
-            <div style={{ width: '600px', height: '400px' }}>
+            <div>
                 <Line data={chartData} />
             </div>
-            <button onClick={returnToHomePage}>Home</button>
+            <button onClick={returnToHomePage} className="btn">Home</button>
         </div>
     );
+    
 };
 
 export default MoodTracker;

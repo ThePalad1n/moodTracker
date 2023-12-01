@@ -1,6 +1,7 @@
 // components/HomePage.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../homePage.css';
 
 
 function HomePage() {
@@ -21,10 +22,10 @@ function HomePage() {
   return (
     <div>
       <h1>Welcome to Mood Tracker!</h1>
-      <button onClick={goToLoginPage}>Login</button>
-      <button onClick={goRegister}>Register</button>
+      <button className='button' onClick={goToLoginPage}>Login</button>
+      <button className='button' onClick={goRegister}>Register</button>
       <br></br>
-      <button onClick={goMoodTracker}>Mood Tracker</button>
+      <button className='button' onClick={goMoodTracker}>Mood Tracker</button>
 
     </div>
     
