@@ -107,55 +107,55 @@ This application is built using the following frameworks:
          [Installation Guide](https://github.com/ThePalad1n/moodTracker/blob/main/INSTALLATION_GUIDE.md)
      
    - **Structure of the Code**: Include a systematic code structure diagram and clear explanations.
-      1. node_modules: This directory contains all the Node.js modules that your project depends on. These are installed via npm (Node Package Manager) and should not be edited directly.
-      
-      2. public: This directory holds static files that are served directly to the client, such as compiled JavaScript, CSS stylesheets, and images.
-      
-      3. server: This contains server-side code, including routes and the main server.js file. 
-         - routes: This sub-directory contains various JavaScript files that define API endpoints for different operations like login, register, users, etc.
-           - login.js: Handles user login functionality.
-           - mood.js: Handles operations related to mood tracking.
-           - register.js: Manages user registration.
-           - users.js: Contain functions for user management.
-           - server.js: The main server file that initializes and runs the Express server.
-      
-      4. src: This directory holds the source code for the client-side of the application, usually written in React.
-         - components: Contains React components that make up the user interface.
-           - AuthenticatedNavbar.js: A navigation bar component that probably shows up when the user is logged in.
-           - HomePage.js: The main landing page component.
-           - Login.js: The component for the login interface.
-           - MoodTracker.js: The component related to mood tracking functionality.
-           - NotFoundPage.js: Displayed when a user navigates to an undefined route.
-           - Queue.js: Could be a component for showing a queue of items or requests.
-           - RegisterForm.js: The form used for user registration.
-           - Stack.js: This could be a custom component that manages a stack of elements or a layout style.
-         - contexts: Holds context files used by React to manage global state.
-         - services: Contains files related to making API calls.
-           - api.js: This might be where the application's API calls are centralized.
-      
-      5. App.css: The main stylesheet for the application.
-      
-      6. App.js: The main React component that acts as the entry point for the client-side application.
-      
-      7. index.css: Global styles for the application.
-      
-      8. index.j*: The JavaScript entry point that renders the React application to the DOM.
-      
-      9. logo.svg: A scalable vector graphic file, likely the logo of the application.
-      
-      10. reportWebVitals.js: A script for logging performance-related metrics.
-      
-      11. setupTests.js: A file for setting up tests, possibly with Jest or another testing library.
-      
-      12. .gitignore: A configuration file for Git that specifies intentionally untracked files to ignore.
-      
-      13. moodtrackerdb.sql: This file contains SQL database schema or scripts related to the mood tracking application.
-      
-      14. package-lock.json: Automatically generated file for any operations where npm modifies either the node_modules tree or package.json.
-      
-      15. package.json: Holds metadata relevant to the project and it is used for managing the project's dependencies, scripts, and versions.
-      
-      16. README.md: A markdown file used to describe the project, how to set it up, and how to use it.
+   1. node_modules: This directory contains all the Node.js modules that your project depends on. These are installed via npm (Node Package Manager) and should not be edited directly.
+   
+   2. public: This directory holds static files that are served directly to the client, such as compiled JavaScript, CSS stylesheets, and images.
+   
+   3. server: This contains server-side code, including routes and the main server.js file. 
+      - routes: This sub-directory contains various JavaScript files that define API endpoints for different operations like login, register, users, etc.
+        - login.js: Handles user login functionality.
+        - mood.js: Handles operations related to mood tracking.
+        - register.js: Manages user registration.
+        - users.js: Contain functions for user management.
+        - server.js: The main server file that initializes and runs the Express server.
+   
+   4. src: This directory holds the source code for the client-side of the application, usually written in React.
+      - components: Contains React components that make up the user interface.
+        - AuthenticatedNavbar.js: A navigation bar component that probably shows up when the user is logged in.
+        - HomePage.js: The main landing page component.
+        - Login.js: The component for the login interface.
+        - MoodTracker.js: The component related to mood tracking functionality.
+        - NotFoundPage.js: Displayed when a user navigates to an undefined route.
+        - Queue.js: Could be a component for showing a queue of items or requests.
+        - RegisterForm.js: The form used for user registration.
+        - Stack.js: This could be a custom component that manages a stack of elements or a layout style.
+      - contexts: Holds context files used by React to manage global state.
+      - services: Contains files related to making API calls.
+        - api.js: This might be where the application's API calls are centralized.
+   
+   5. App.css: The main stylesheet for the application.
+   
+   6. App.js: The main React component that acts as the entry point for the client-side application.
+   
+   7. index.css: Global styles for the application.
+   
+   8. index.j*: The JavaScript entry point that renders the React application to the DOM.
+   
+   9. logo.svg: A scalable vector graphic file, likely the logo of the application.
+   
+   10. reportWebVitals.js: A script for logging performance-related metrics.
+   
+   11. setupTests.js: A file for setting up tests, possibly with Jest or another testing library.
+   
+   12. .gitignore: A configuration file for Git that specifies intentionally untracked files to ignore.
+   
+   13. moodtrackerdb.sql: This file contains SQL database schema or scripts related to the mood tracking application.
+   
+   14. package-lock.json: Automatically generated file for any operations where npm modifies either the node_modules tree or package.json.
+   
+   15. package.json: Holds metadata relevant to the project and it is used for managing the project's dependencies, scripts, and versions.
+   
+   16. README.md: A markdown file used to describe the project, how to set it up, and how to use it.
 
    - **Functionalities and Test Results**: Present functionalities and testing results for verification.
 
