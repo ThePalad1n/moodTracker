@@ -8,7 +8,7 @@ These instructions will help you set up the project locally. Follow these simple
 
 ### Prerequisites
 
-Before you begin, ensure you have visited the [Installation Guide](https://github.com/ThePalad1n/moodTracker/main/INSTALLATION_GUIDE.md) so that you can run the project.
+Before you begin, ensure you have visited the [Installation Guide](https://github.com/ThePalad1n/moodTracker/blob/main/INSTALLATION_GUIDE.md) so that you can run the project.
 
 # Cloning the Project
 
