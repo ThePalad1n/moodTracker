@@ -1,5 +1,3 @@
-// src/components/RegisterForm.js
-
 import React, { useState } from 'react';
 import { useNavigate  } from 'react-router-dom';
 import api from '../services/api'; // Adjust the path according to your project structure
@@ -17,29 +15,49 @@ const RegisterForm = () => {
             if (response.status === 'success') {
                 navigate('/login');
             }
-            // Handle successful registration (e.g., redirect to login page)
         } catch (error) {
             console.error('Registration failed', error);
-            // Handle error (e.g., display error message)
         }
     };
 
+    const handleLogin = () => {
+        navigate('/login'); // Adjust with your login route if needed
+    };
+
     return (
-        <form onSubmit={handleSubmit}>
-            <input 
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-            />
-            <input 
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-            />
-            <button type="submit">Register</button>
-        </form>
+        <div className="register-container">
+            <h1>Create an Account</h1>
+            <p>Get started with tracking your mood today.</p>
+            <form onSubmit={handleSubmit} className="register-form">
+                <div className="form-group">
+                    <label htmlFor="register-email">Email Address</label>
+                    <input 
+                        id="register-email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Enter your email"
+                        className="form-control"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="register-password">Password</label>
+                    <input 
+                        id="register-password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Create a password"
+                        className="form-control"
+                    />
+                </div>
+                <button type="submit" className="btn btn-primary">Register</button>
+                <br></br>
+                <button type="button" className="btn btn-link" onClick={handleLogin}>
+                    Already have an account? Log In
+                </button>
+            </form>
+        </div>
     );
 };
 

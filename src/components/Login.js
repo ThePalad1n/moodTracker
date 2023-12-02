@@ -1,4 +1,3 @@
-// LoginPage.js
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
@@ -15,38 +14,58 @@ function LoginPage() {
     try {
       const response = await api.login(email, password);
       console.log('Login successful', response);
-  
+
       if (response.status === 'success') {
-        // Ensure the response contains the user's ID and email
         setCurrentUser({
-          id: response.id, // Adjust these according to your API's response structure
+          id: response.id,
           email: response.email,
         });
-  
+
         navigate('/moodtracker');
       }
     } catch (error) {
       console.error('Login failed', error);
     }
   };
-  
+
+  const handleRegister = () => {
+    navigate('/register'); // You may need to adjust the path to your actual registration route
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input 
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <input 
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-      />
-      <button type="submit">Login</button>
-    </form>
+    <div className="login-container">
+      <h1>Welcome to MoodTracker</h1>
+      <p>Please sign in to track your mood.</p>
+      <form onSubmit={handleSubmit} className="login-form">
+        <div className="form-group">
+            <label htmlFor="email">Email Address</label>
+            <input 
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Your email"
+              className="form-control"
+            />
+        </div>
+        <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input 
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Your password"
+              className="form-control"
+            />
+        </div>
+        <button type="submit" className="btn btn-primary">Login</button>
+        <br></br>
+        <button type="button" className="btn btn-secondary" onClick={handleRegister}>
+          Register New Account
+        </button>
+      </form>
+    </div>
   );
 };
 

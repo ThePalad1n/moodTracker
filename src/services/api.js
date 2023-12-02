@@ -68,11 +68,28 @@ const getMoodsByUserId = async (userId) => {
 };
 
 
+const createJournalEntry = async (userId, entry) => {
+  const response = await axios.post(`${API_URL}/journal/add`, {
+    userId,
+    entry
+  });
+  
+  return response.data;
+};
+
+const getJournalEntriesByUserId = async (userId) => {
+  const url = `${API_URL}/journal/user/${userId}`;
+  const response = await axios.get(url);
+  return response.data;
+};
+
 export default {
   login,
   register,
   addMood,
   removeMood,
-  getMoodsByUserId
+  getMoodsByUserId,
+  createJournalEntry,
+  getJournalEntriesByUserId
   // other methods...
 };

@@ -23,10 +23,6 @@ BEGIN
 END //
 DELIMITER ;
 
--- Activity Input Component: For users to input their daily activities.
--- ALTER TABLE MoodEntries
--- ADD activity VARCHAR(255);
-
 CREATE TABLE MoodEntries (
   id INT PRIMARY KEY AUTO_INCREMENT,
   userId INT,
@@ -37,4 +33,24 @@ CREATE TABLE MoodEntries (
 );
 
 
+CREATE TABLE JournalEntries (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  userId INT,
+  entry TEXT,
+  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (userId) REFERENCES Users(id)
+);
 
+DELIMITER //
+CREATE PROCEDURE CreateJournalEntry(IN userId INT, IN entryText TEXT)
+BEGIN
+  INSERT INTO JournalEntries (userId, entry) VALUES (userId, entryText);
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE GetJournalEntriesByUserId(IN userId INT)
+BEGIN
+  SELECT * FROM JournalEntries WHERE userId = userId ORDER BY timestamp DESC;
+END //
+DELIMITER ;
