@@ -172,7 +172,9 @@ This application is built using the following frameworks:
             <img src="URL" width="200" height="200" />
      
         Login Check:
-            <img src="[URL](https://drive.google.com/file/d/1HV4C6f1DXABS1hSqktyENkQfJKPjcV0b/view?usp=drive_link)" width="200" height="200" />
+
+            ![alt text](https://drive.google.com/file/d/1HV4C6f1DXABS1hSqktyENkQfJKPjcV0b/view?usp=drive_link)
+
      
         MoodTracker:
             <img src="URL" width="200" height="200" />
