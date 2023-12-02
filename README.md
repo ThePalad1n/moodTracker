@@ -1,3 +1,30 @@
+# Table of Contents
+
+1. [Introduction](#mood-tracker)
+   - [Welcome to Mood Tracker](#mood-tracker)
+2. [Getting Started](#getting-started)
+   - [Instructions for Setup](#getting-started)
+   - [Prerequisites](#prerequisites)
+     - [Installation Guide](#prerequisites)
+3. [Cloning the Project](#cloning-the-project)
+   - [Cloning Command](#cloning-the-project)
+4. [Installing Packages](#installing-packages)
+   - [Installation Steps](#installing-packages)
+   - [Note on Running Server and Frontend](#installing-packages)
+5. [Running the Server](#running-the-server)
+   - [Command to Start Server](#running-the-server)
+6. [Running the Frontend](#running-the-frontend)
+   - [Command to Start Frontend](#running-the-frontend)
+7. [Using the Application](#how-to-use-the-app)
+   - [Steps to Use the App](#how-to-use-the-app)
+     - [Register](#how-to-use-the-app)
+     - [Login](#how-to-use-the-app)
+     - [Start Tracking](#how-to-use-the-app)
+8. [Frameworks and Technologies](#frameworks)
+   - [React](#frameworks)
+   - [MySQL](#frameworks)
+
+
 # Mood Tracker
 
 Welcome to the Mood Tracker project! This application offers a user-friendly interface for mood tracking and analysis using your favorite data structures and algorithms!
