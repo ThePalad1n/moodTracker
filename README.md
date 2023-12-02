@@ -161,23 +161,11 @@ This application is built using the following frameworks:
 
         There is a login and registration page. Once the user is signed in and authenticated they are directed to the MoodTracker where all their entries are saved in the database and connected to their individual profile.
 
-        Registration:
-            <img src="URL" width="200" height="200" />
-
-
-        Registration Check:
-            <img src="URL" width="200" height="200" />
-     
-        Login:
-            <img src="URL" width="200" height="200" />
-     
-        Login Check:
-
-     [IMAGE](https://drive.google.com/file/d/1HV4C6f1DXABS1hSqktyENkQfJKPjcV0b/view?usp=drive_link)
-
-     
-        MoodTracker:
-            <img src="URL" width="200" height="200" />
+        [Registration](https://drive.google.com/file/d/1YLcBOxJo3Ax9D2ZLN7lCd50fGz7zgsd0/view?usp=drive_link)
+        [Registration Check](https://drive.google.com/file/d/1mhI0uluvDz47eygn3OFjTNIytBaZg1H4/view?usp=drive_link)
+        [Login](https://drive.google.com/file/d/1rSeOSGKR8CreMmL8hr60YCej-DzvcgBV/view?usp=drive_link)
+        [Login Check](https://drive.google.com/file/d/1HV4C6f1DXABS1hSqktyENkQfJKPjcV0b/view?usp=drive_link)
+        [MoodTracker](https://drive.google.com/file/d/1ACbaQvPXcTdt0UpCjCOWi6X4Rxi7yEKV/view?usp=drive_link)
 
    - **Discussion and Conclusions**: Discuss project issues, limitations, and the application of course learning.
 
