@@ -159,9 +159,30 @@ This application is built using the following frameworks:
 
    - **Functionalities and Test Results**: Present functionalities and testing results for verification.
 
-     There is a login and registration page. Once the user is signed in and authenticated they are directed to the MoodTracker where all their entries are saved in the database and connected to their individual profile.
+        There is a login and registration page. Once the user is signed in and authenticated they are directed to the MoodTracker where all their entries are saved in the database and connected to their individual profile.
+
+        Registration:
+            <img src="URL" width="200" height="200" />
+
+
+        Registration Check:
+            <img src="URL" width="200" height="200" />
+     
+        Login:
+            <img src="URL" width="200" height="200" />
+     
+        Login Check:
+            <img src="[URL](https://github.com/ThePalad1n/moodTracker/blob/main/report%20photos/login%20fail.JPG)" width="200" height="200" />
+     
+        MoodTracker:
+            <img src="URL" width="200" height="200" />
 
    - **Discussion and Conclusions**: Discuss project issues, limitations, and the application of course learning.
-```
 
-This updated structure includes the new report sections and integrates them seamlessly into the existing README content.
+      Since there was a required UI component the focus seemed to shift on delivering more of a presentable product which took away from some of the wishful features.
+      
+      Limitations were strictly time and I will be working on this after the course because I believe it can become a good resource for my community.
+      
+      Currently, the moodtracker uses stack and queues in the first chart with the initial entries. In the second chart there is a section that uses a heap to determine the frequency of tracked mood values. Both of which update in real time.
+      
+      Future implementations would include activities being tied to the moods for better analytics and finishing the journal section. And a specialized nav for the user after authentication.
