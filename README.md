@@ -173,7 +173,7 @@ This application is built using the following frameworks:
      
         Login Check:
 
-     ![alt text](https://drive.google.com/file/d/1HV4C6f1DXABS1hSqktyENkQfJKPjcV0b/view?usp=drive_link)
+     [IMAGE](https://drive.google.com/file/d/1HV4C6f1DXABS1hSqktyENkQfJKPjcV0b/view?usp=drive_link)
 
      
         MoodTracker:
