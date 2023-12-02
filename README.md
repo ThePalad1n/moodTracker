@@ -1,11 +1,3 @@
-# Getting Started with Create React App
-
-moodtracker
-
-## Available Scripts
-
-In the project directory, you can run:
-
 # Mood Tracker
 
 Welcome to the Mood Tracker project! This application offers a user-friendly interface for mood tracking and analysis using your favorite data structures and algorithms!
@@ -129,5 +121,3 @@ This application is built using the following frameworks:
 
 - **React**: A JavaScript library for building user interfaces.
 - **MySQL**: A robust database management system to store and manage your mood data.
-
-
