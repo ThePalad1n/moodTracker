@@ -172,7 +172,7 @@ This application is built using the following frameworks:
             <img src="URL" width="200" height="200" />
      
         Login Check:
-            <img src="[URL](https://github.com/ThePalad1n/moodTracker/blob/main/report%20photos/login%20fail.JPG)" width="200" height="200" />
+            <img src="[URL](https://github.com/ThePalad1n/moodTracker/blob/main/report%20photos/login%20fail.JPG?raw=true)" width="200" height="200" />
      
         MoodTracker:
             <img src="URL" width="200" height="200" />
