@@ -33,7 +33,9 @@
 
 # Mood Tracker
 
-Welcome to the Mood Tracker project! This application offers a user-friendly interface for mood tracking and analysis using your favorite data structures and algorithms! What are the benefits of mood tracking?
+Welcome to the Mood Tracker project! This application offers a user-friendly interface for mood tracking and analysis using your favorite data structures and algorithms! 
+
+What are the benefits of mood tracking?
 
    1. **Self-Awareness**: Regular mood tracking enhances self-awareness. By recognizing patterns in your emotional states, you become more attuned to what causes positive and negative feelings. This awareness is the first step towards making changes that foster well-being.
 
@@ -51,6 +53,12 @@ Welcome to the Mood Tracker project! This application offers a user-friendly int
 
    8. **Personalized Strategies for Happiness**: Over time, mood tracking can reveal what specifically works for you in enhancing your happiness. This personalized understanding is far more effective than generic advice.
 
+
+What data structures or algorithms where used?
+
+   1. Stacks
+   2. Queues
+   3. Hash Table
 
 ## Getting Started
 
